@@ -89,12 +89,8 @@ To access the game : acdca27d38e8b456d8bb23081404284b-1473205293.us-east-1.elb.a
 CLEAN UP ALL CREATED RESOURCES ON AWS   
 
 terraform destroy
-![alt text](image-6.png)
 
-![alt text](image-7.png)
-
-![alt text](image-8.png)
-
+![alt text](image-9.png)
 
 
 
