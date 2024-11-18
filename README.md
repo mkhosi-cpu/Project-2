@@ -71,7 +71,8 @@ terraform apply - This will begin the infrastructure provision with all specifie
 #pod/2048-pod created
 
  kubectl get pods - view the newly created pod
- ![alt text](image-3.png)
+
+![alt text](image-3.png)
 
  # Setup Load Balancer Service
 
