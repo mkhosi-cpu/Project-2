@@ -72,7 +72,7 @@ data "aws_subnets" "default" {
 
 # Security Group for EKS Cluster
 resource "aws_security_group" "eks_cluster_sg" {
-  name        = "Project-2"
+  name        = "Project2"
   description = "Security group for EKS cluster"
   vpc_id      = data.aws_vpc.default.id
 
