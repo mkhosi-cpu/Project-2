@@ -29,3 +29,17 @@ I explored Kubernetes's scaling capabilities, adjusting the number of applicatio
 4. Application Exposure:
 
 To make the 2048 game accessible to users, I created a Kubernetes service to expose it securely over the internet. Additionally, I could have implemented an Ingress controller for more advanced routing
+
+# Create an EKS cluster 
+
+Deploy the EKS cluster using terraform eks.tf
+
+terraform init - to initialize the terraform directory
+![alt text](image.png)
+
+terraform plan - To see what will be deployed
+![alt text](image-1.png)
+
+terraform apply - This will the infrastructure provision
+
+
