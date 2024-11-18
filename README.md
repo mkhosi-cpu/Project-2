@@ -40,6 +40,33 @@ terraform init - to initialize the terraform directory
 terraform plan - To see what will be deployed
 ![alt text](image-1.png)
 
-terraform apply - This will the infrastructure provision
+terraform apply - This will begin the infrastructure provision with all specified resorces
+
+# Resources deployed using terrafom
+
+#IAM Role for EKS Cluster
+
+#Attach AmazonEKSClusterPolicy to Cluster Role
+
+#IAM Role for EKS Node Group
+
+#Attach Policies to Node Group Role
+
+#Fetch Default VPC
+
+#Fetch Subnets across multiple AZs
+
+#Security Group for EKS Cluster
+
+#EKS Cluster
+
+#EKS Node Group
+
+#EKS Addons
+
+
+
+
+
 
 
