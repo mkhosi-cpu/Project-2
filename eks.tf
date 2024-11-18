@@ -1,6 +1,5 @@
-# Provider Configuration
 provider "aws" {
-  region = "us-east-1"  # Change to your preferred region
+  region = "us-east-1"
 }
 
 # IAM Role for EKS Cluster
@@ -62,21 +61,25 @@ data "aws_vpc" "default" {
   default = true
 }
 
-# Fetch Default Subnets
-data "aws_subnets" "default" {
+# Fetch Subnets across multiple AZs
+data "aws_subnets" "multi_az_subnets" {
   filter {
     name   = "vpc-id"
     values = [data.aws_vpc.default.id]
+  }
+
+  filter {
+    name   = "availability-zone"
+    values = ["us-east-1a", "us-east-1b", "us-east-1c"]
   }
 }
 
 # Security Group for EKS Cluster
 resource "aws_security_group" "eks_cluster_sg" {
-  name        = "Project2"
+  name        = "project2-eks-cluster-sg"
   description = "Security group for EKS cluster"
   vpc_id      = data.aws_vpc.default.id
 
-  # Ingress rules for ports 22, 80, 8080
   dynamic "ingress" {
     for_each = [22, 80, 8080]
     content {
@@ -97,16 +100,16 @@ resource "aws_security_group" "eks_cluster_sg" {
 
 # EKS Cluster
 resource "aws_eks_cluster" "main" {
-  name     = "Project-2"
+  name     = "Project2"
   role_arn = aws_iam_role.eks_cluster_role.arn
 
   vpc_config {
-    subnet_ids              = data.aws_subnets.default.ids
+    subnet_ids              = data.aws_subnets.multi_az_subnets.ids
     security_group_ids      = [aws_security_group.eks_cluster_sg.id]
     endpoint_public_access  = true
   }
 
-  version = "1.27"  # Kubernetes version
+  version = "1.27"
 
   depends_on = [aws_iam_role_policy_attachment.eks_cluster_policy]
 }
@@ -114,9 +117,9 @@ resource "aws_eks_cluster" "main" {
 # EKS Node Group
 resource "aws_eks_node_group" "main" {
   cluster_name    = aws_eks_cluster.main.name
-  node_group_name = "project-2-eks-nodegrp-1"
+  node_group_name = "project2-eks-nodegrp-1"
   node_role_arn   = aws_iam_role.eks_node_group_role.arn
-  subnet_ids      = data.aws_subnets.default.ids
+  subnet_ids      = data.aws_subnets.multi_az_subnets.ids
 
   scaling_config {
     desired_size = 1
@@ -124,10 +127,8 @@ resource "aws_eks_node_group" "main" {
     min_size     = 1
   }
 
-  # Amazon Linux 2 AMI
   ami_type = "AL2_x86_64"
 
-  # SSH Access Configuration
   remote_access {
     ec2_ssh_key = "kops-key"  # Replace with your SSH key
     source_security_group_ids = [aws_security_group.eks_cluster_sg.id]
@@ -138,7 +139,7 @@ resource "aws_eks_node_group" "main" {
   depends_on = [aws_iam_role_policy_attachment.eks_node_group_policies]
 }
 
-# Optional: EKS Addons
+# EKS Addons
 resource "aws_eks_addon" "coredns" {
   cluster_name = aws_eks_cluster.main.name
   addon_name   = "coredns"
