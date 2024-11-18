@@ -109,7 +109,7 @@ resource "aws_eks_cluster" "main" {
     endpoint_public_access  = true
   }
 
-  version = "1.27"
+  version = "1.31"
 
   depends_on = [aws_iam_role_policy_attachment.eks_cluster_policy]
 }
@@ -143,17 +143,17 @@ resource "aws_eks_node_group" "main" {
 resource "aws_eks_addon" "coredns" {
   cluster_name = aws_eks_cluster.main.name
   addon_name   = "coredns"
-  addon_version = "v1.10.1-eksbuild.1"
+  addon_version = "v1.11.3-eksbuild.2"
 }
 
 resource "aws_eks_addon" "kube_proxy" {
   cluster_name = aws_eks_cluster.main.name
   addon_name   = "kube-proxy"
-  addon_version = "v1.27.1-eksbuild.1"
+  addon_version = "v1.31.2-eksbuild.2"
 }
 
 resource "aws_eks_addon" "vpc_cni" {
   cluster_name = aws_eks_cluster.main.name
   addon_name   = "vpc-cni"
-  addon_version = "v1.14.1-eksbuild.1"
+  addon_version = "v1.18.6-eksbuild.1"
 }
