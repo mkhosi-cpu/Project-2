@@ -64,6 +64,28 @@ terraform apply - This will begin the infrastructure provision with all specifie
 
 #EKS Addons
 
+# Create a new POD in EKS for the 2048 game
+
+ kubectl apply -f 2048-pod.yaml - apply the config file to create the pod
+
+#pod/2048-pod created
+
+ kubectl get pods - view the newly created pod
+ ![alt text](image-3.png)
+
+ # Setup Load Balancer Service
+
+kubectl apply -f 2048-svc.yaml - apply the config file 
+
+kubectl describe svc game-2048-svc - view details of the modified service 
+![alt text](image-4.png)
+
+Access the LoadBalancer Ingress on the kops instance curl <LoadBalancer_Ingress>:<Port_number> or curl acdca27d38e8b456d8bb23081404284b-1473205293.us-east-1.elb.amazonaws.com:80 
+
+To access the game : acdca27d38e8b456d8bb23081404284b-1473205293.us-east-1.elb.amazonaws.com:80 
+![alt text](image-5.png)
+
+
 
 
 
