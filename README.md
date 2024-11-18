@@ -86,6 +86,19 @@ Access the LoadBalancer Ingress on the kops instance curl <LoadBalancer_Ingress>
 To access the game : acdca27d38e8b456d8bb23081404284b-1473205293.us-east-1.elb.amazonaws.com:80 
 ![alt text](image-5.png)
 
+CLEAN UP ALL CREATED RESOURCES ON AWS   
+
+terraform destroy
+![alt text](image-6.png)
+
+![alt text](image-7.png)
+
+![alt text](image-8.png)
+
+
+
+
+
 
 
 
